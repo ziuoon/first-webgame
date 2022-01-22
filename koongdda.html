@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>쿵쿵따</title>
+</head>
+
+<body>
+<div style="text-align: center"><h1>쿵쿵따 게임 ! </h1></div>
+<div style="text-align: center"><h3><span id="order">1</span>번째 참가자</h3></div>
+<div style="text-align: center"> 제시어 : <span id="word"></span>
+</div>
+<div style="text-align: center">
+  <input type="text">
+  <button> Go !</button>
+</div>
+
+<script>
+  const number = Number(prompt('몇 명 참가?'), 10);
+  const $button = document.querySelector('button');
+  const $input = document.querySelector('input');
+  const $word = document.querySelector('#word');
+  const $order = document.querySelector('#order');
+
+  let word;       // 제시어
+  let newWord;    // 입력어
+
+  const onClickButton = () => {
+    if (!word) {      // 제시어가 없으면
+      word = newWord; // 입력어가 제시어로 됨
+      $word.textContent = word; //
+      $input.value = '';
+      $input.focus();
+      const order = Number($order.textContent);      //현재 순서 order에 넣어
+      if (order === number) {                       // 마지막 순서면
+        $order.textContent = 1;
+      } else
+        $order.textContent = order + 1;
+    } else {        // 제시어가 있다면
+      if (word[word.length - 1] === newWord[0] && newWord.length === 3) {
+        word = newWord;
+        $word.textContent = word;
+        $input.value = '';
+        $input.focus();
+        const order = Number($order.textContent);      //현재 순서 order에 넣어
+        if (order === number) {                       // 마지막 순서면
+          $order.textContent = 1;
+        } else {
+          $order.textContent = order + 1;
+        }
+      } else {
+        alert('올바르지 않은 단어입니다 :-p !')
+      }
+    }
+  }
+  const onInput = (event) => {
+    newWord = event.target.value;
+  }
+
+  $button.addEventListener('click', onClickButton);
+  $input.addEventListener('input', onInput);
+</script>
+</body>
+</html>
